@@ -40,11 +40,16 @@ async def run(rpc_uri, quantity):
         ):
             logs.append(log)
 
+        balance = await rpc_client.get_balance(
+            Address("0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab"), HexInt(6_000_000)
+        )
+
         print("Block Height:", block_height)
         print("Block 6,000,000:", block)
         print("Transaction Receipt:", transaction_receipt)
         print("Owner:", owner)
         print("Logs:", logs)
+        print("Balance:", balance)
 
 
 @click.command()

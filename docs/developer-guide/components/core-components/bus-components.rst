@@ -24,7 +24,7 @@ Data Bus implementations are asynchronous context managers and must be utilized 
 Data Package
 ++++++++++++
 
-A Data Package is a construct for placing data on the Data Bust be consumed. Having
+A Data Package is a construct for placing data on the Data Bus to be consumed. Having
 typed data being passed around makes it easier for Data Consumers to filter out data
 they do not wish to process. Below is an example of a simple Data Package:
 

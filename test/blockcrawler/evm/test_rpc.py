@@ -210,6 +210,26 @@ class TestRPCClient(BaseRPCClientTestCase):
         with self.assertRaises(RpcError):
             await self._rpc_client.get_block(HexInt(1))
 
+    async def test_get_balance_raises_RPCError_for_aio_client_error(
+        self,
+    ):
+        self._ws_connect_patch.return_value.send_json.side_effect = (
+            aiohttp.client_exceptions.ClientError
+        )
+        with self.assertRaises(RpcError):
+            await self._rpc_client.get_balance(
+                Address("0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab"), HexInt(1)
+            )
+
+    async def test_get_balance_raises_RPCError_for_asyncio_timeout(
+        self,
+    ):
+        self._ws_connect_patch.return_value.send_json.side_effect = asyncio.TimeoutError
+        with self.assertRaises(RpcError):
+            await self._rpc_client.get_balance(
+                Address("0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab"), HexInt(1)
+            )
+
     async def test_get_block_number_raises_RPCError_for_aio_client_error(
         self,
     ):
@@ -697,6 +717,43 @@ class GetBlockTestCase(BaseRPCClientTestCase):
         self._rpc_response["result"] = None
         with self.assertRaisesRegex(RpcClientError, "Error retrieving block: no block returned"):
             await self._rpc_client.get_block(HexInt(1), True)
+
+
+class GetBalanceTestCase(BaseRPCClientTestCase):
+    async def asyncSetUp(self) -> None:
+        await super().asyncSetUp()
+        self._rpc_response["result"] = "0x3c91f2ed8862ee8"
+
+    async def test_get_balance_sends_proper_json(self):
+        await self._rpc_client.get_balance(
+            Address("0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab"), HexInt(1)
+        )
+        self._ws_connect_patch.return_value.send_json.assert_awaited_once_with(
+            {
+                "jsonrpc": "2.0",
+                "method": "eth_getBalance",
+                "params": ("0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab", "0x1"),
+                "id": ANY,
+            },
+        )
+
+    async def test_get_balance_returns_expected_value(self):
+        expected = HexInt("0x3c91f2ed8862ee8")
+        actual = await self._rpc_client.get_balance(
+            Address("0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab"), HexInt(1)
+        )
+        self.assertEqual(expected, actual)
+
+    async def test_get_balance_raises_exception_for_rpc_error(self):
+        self._rpc_response = {"jsonrpc": "rpc", "error": {"code": "code", "message": "message"}}
+        expected = r"RPC rpc - Req .+ - code: message"
+        with self.assertRaisesRegex(RpcServerError, expected):
+            try:
+                await self._rpc_client.get_balance(
+                    Address("0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab"), HexInt(1)
+                )
+            except Exception as e:
+                raise e
 
 
 class GetBlockNumberTestCase(BaseRPCClientTestCase):

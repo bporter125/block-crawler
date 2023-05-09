@@ -52,12 +52,23 @@ Get event logs filtered by parameters
    :emphasize-lines: 3-10
 
 
+get_balance
++++++++++++
+
+Get the balance of the account of given address at a given block number.
+
+.. literalinclude:: /_examples/evm_rpc_example.py
+   :language: python
+   :lines: 11,14,43
+   :emphasize-lines: 3
+
+
 ConnectionPoolingEvmRpcClient
 -----------------------------
 
 A composite client that receives a pool of clients and uses them to make requests. This
 client allows for massively parallel processing as it can send requests to multiple
-connections adn, as a result, multiple providers. It only has a single strategy at this
+connections and, as a result, multiple providers. It only has a single strategy at this
 point which is round-robin. The methods available are the same as the `EvmRpcClient`.
 
 Example:
@@ -89,6 +100,8 @@ displayed in the console:
     Owner: 0x5a4d185c590c5815a070ed62c278e665d137a0d9
 
     Logs: [EvmLog(removed=False, log_index=HexInt('0x5f'), transaction_index=HexInt('0x39'), transaction_hash=HexBytes('0xbaea32a34415c3afa45f6eb12dea54fd02b7e0ff0dc2bec37cbb506355d09407'), block_hash=HexBytes('0xb5fc5650b0dc804ed2131d48a06d409645c4d4012fc3c8ecfb6e96762f673259'), block_number=HexInt('0x5b8db1'), data=HexBytes('0x'), topics=[HexBytes('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'), HexBytes('0x0000000000000000000000000000000000000000000000000000000000000000'), HexBytes('0x0000000000000000000000003bd2033271d136495aff74303e06b714397cae38'), HexBytes('0x0000000000000000000000000000000000000000000000000000000000001a9f')], address='0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab'), EvmLog(removed=False, log_index=HexInt('0x62'), transaction_index=HexInt('0x39'), transaction_hash=HexBytes('0xbaea32a34415c3afa45f6eb12dea54fd02b7e0ff0dc2bec37cbb506355d09407'), block_hash=HexBytes('0xb5fc5650b0dc804ed2131d48a06d409645c4d4012fc3c8ecfb6e96762f673259'), block_number=HexInt('0x5b8db1'), data=HexBytes('0x'), topics=[HexBytes('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'), HexBytes('0x0000000000000000000000000000000000000000000000000000000000000000'), HexBytes('0x0000000000000000000000003bd2033271d136495aff74303e06b714397cae38'), HexBytes('0x0000000000000000000000000000000000000000000000000000000000001aa0')], address='0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab'), EvmLog(removed=False, log_index=HexInt('0x64'), transaction_index=HexInt('0x39'), transaction_hash=HexBytes('0xbaea32a34415c3afa45f6eb12dea54fd02b7e0ff0dc2bec37cbb506355d09407'), block_hash=HexBytes('0xb5fc5650b0dc804ed2131d48a06d409645c4d4012fc3c8ecfb6e96762f673259'), block_number=HexInt('0x5b8db1'), data=HexBytes('0x'), topics=[HexBytes('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'), HexBytes('0x0000000000000000000000000000000000000000000000000000000000000000'), HexBytes('0x0000000000000000000000003bd2033271d136495aff74303e06b714397cae38'), HexBytes('0x0000000000000000000000000000000000000000000000000000000000001aa1')], address='0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab'), EvmLog(removed=False, log_index=HexInt('0x66'), transaction_index=HexInt('0x39'), transaction_hash=HexBytes('0xbaea32a34415c3afa45f6eb12dea54fd02b7e0ff0dc2bec37cbb506355d09407'), block_hash=HexBytes('0xb5fc5650b0dc804ed2131d48a06d409645c4d4012fc3c8ecfb6e96762f673259'), block_number=HexInt('0x5b8db1'), data=HexBytes('0x'), topics=[HexBytes('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'), HexBytes('0x0000000000000000000000000000000000000000000000000000000000000000'), HexBytes('0x0000000000000000000000003bd2033271d136495aff74303e06b714397cae38'), HexBytes('0x0000000000000000000000000000000000000000000000000000000000001aa2')], address='0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab'), EvmLog(removed=False, log_index=HexInt('0x68'), transaction_index=HexInt('0x39'), transaction_hash=HexBytes('0xbaea32a34415c3afa45f6eb12dea54fd02b7e0ff0dc2bec37cbb506355d09407'), block_hash=HexBytes('0xb5fc5650b0dc804ed2131d48a06d409645c4d4012fc3c8ecfb6e96762f673259'), block_number=HexInt('0x5b8db1'), data=HexBytes('0x'), topics=[HexBytes('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'), HexBytes('0x0000000000000000000000000000000000000000000000000000000000000000'), HexBytes('0x0000000000000000000000003bd2033271d136495aff74303e06b714397cae38'), HexBytes('0x0000000000000000000000000000000000000000000000000000000000001aa3')], address='0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab'), EvmLog(removed=False, log_index=HexInt('0x6a'), transaction_index=HexInt('0x39'), transaction_hash=HexBytes('0xbaea32a34415c3afa45f6eb12dea54fd02b7e0ff0dc2bec37cbb506355d09407'), block_hash=HexBytes('0xb5fc5650b0dc804ed2131d48a06d409645c4d4012fc3c8ecfb6e96762f673259'), block_number=HexInt('0x5b8db1'), data=HexBytes('0x'), topics=[HexBytes('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'), HexBytes('0x0000000000000000000000000000000000000000000000000000000000000000'), HexBytes('0x0000000000000000000000003bd2033271d136495aff74303e06b714397cae38'), HexBytes('0x0000000000000000000000000000000000000000000000000000000000001aa4')], address='0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab')]
+
+    Balance: 0x0
 
 
 :download:`Download the example </_examples/evm_rpc_example.py>` and try it yourself.

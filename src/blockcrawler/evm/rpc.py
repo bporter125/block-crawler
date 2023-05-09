@@ -116,6 +116,18 @@ class EvmRpcClient(RpcClient):
     STAT_GET_LOGS = "rpc.eth.get_logs"
     """Stat name for counts of `eth_getLogs` RPC calls"""
 
+    async def get_balance(self, address: Address, block_num: HexInt) -> HexInt:
+        """Get the balance of the account of given address at a given block number.
+        `eth_getBalance <https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_getbalance>`_
+
+        :param block_num: The block number for which to check a balance.
+        :param address: The address to retrieve a balance for.
+        :returns: A HexInt representation of the account balance.
+        """
+
+        result = await self.send("eth_getBalance", str(address), str(block_num))
+        return HexInt(result)
+
     async def get_block_number(self) -> HexInt:
         """Get the current block height via
         `eth_blockNumber <https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_blocknumber>`_

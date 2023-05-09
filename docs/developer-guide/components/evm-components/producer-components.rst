@@ -9,7 +9,7 @@ BlockIDProducer
 Will produce a for a range of block IDs. Each Block ID will be contained within an
 `EvmBlockIDDataPackage` and sent to the Data Bus. The range is processed via a `step`
 parameter which determine the next item in the range in the same manner as the `step`
-parameter inm hte Python `range()` function.
+parameter in the Python `range()` function.
 
 Example:
 
